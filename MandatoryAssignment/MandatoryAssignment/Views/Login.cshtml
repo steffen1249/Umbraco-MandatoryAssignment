@@ -1,0 +1,8 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+}
+<h1 class="pagetitle">@Umbraco.Field("pageName")</h1>
+<div class="post-content clearfix">
+    @Html.Partial("login")
+</div>

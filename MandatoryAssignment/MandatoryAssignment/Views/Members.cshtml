@@ -1,0 +1,70 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+	
+	var memberService = ApplicationContext.Current.Services.MemberService;
+	
+	var ativeMembers = memberService.GetMembersByGroup("Active");
+    var prospectMembers = memberService.GetMembersByGroup("Prospect");
+}
+
+<h1 class="pagetitle">@Umbraco.Field("pageName")</h1>
+
+<div class="post-content">
+    <div class="table-wrapper">
+        <h2>Active members</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var member in ativeMembers)
+                {
+                    <tr>
+                        @{ 
+                            var typedMember = Umbraco.TypedMember(member.Id);
+                            var cropUrl = typedMember.GetCropUrl("photo", "memberThumbnail");
+
+                            var firstname = member.GetValue("firstname");
+                            var lastname = member.GetValue("lastname");
+                        }
+                        <td class="image">
+                            <img src="@cropUrl" alt="@firstname @lastname" /> 
+                        </td>
+                        <td>@firstname</td>
+                        <td>@lastname</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-wrapper prospects">
+        <h2>Prospect members</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var member in prospectMembers)
+                {
+                    <tr>
+                        @{
+                            var firstname = member.GetValue("firstname");
+                            var lastname = member.GetValue("lastname");
+                        }
+                        <td>@firstname</td>
+                        <td>@lastname</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

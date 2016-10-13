@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+}
+
+<article>
+    <header>
+        <h2>@Umbraco.Field("articleItemTitle")</h2>
+    </header>
+    <div class="image">
+        <img src="@CurrentPage.GetCropUrl("articleItemImage", "fit")" />
+    </div>
+    <div class="post-content">
+        <p class="meta-info">Posted by @Umbraco.Field("creatorName") on @umbraco.library.FormatDateTime(@Umbraco.Field("createDate").ToString(), "dd. MMMM yyyy")</p>
+        <div>@Umbraco.Field("articleItemContent")</div>
+    </div>
+</article>

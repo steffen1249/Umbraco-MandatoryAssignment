@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+    var projects = Umbraco.Content(1085);
+}
+
+<div class="quote">
+	<h2>@Umbraco.Field("homeTitle")</h2>
+	<p>@Umbraco.Field("homeQuote")</p>
+</div>
+<section>
+	<header class="clearfix">
+		<h1>Project</h1>
+		<span>Recent work</span>
+		<a href="@projects.Url">More work »</a>
+	</header>
+	<hr />
+    @Umbraco.RenderMacro("listProjects", new { NumOfProjects = 3 })
+</section>

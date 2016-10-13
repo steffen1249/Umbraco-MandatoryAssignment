@@ -1,0 +1,26 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{ 
+	var selection = CurrentPage.Site().FirstChild("articlesMain").Children.Where("Visible").OrderBy("CreateDate desc");
+}
+
+@foreach (var item in selection)
+{
+    <article>
+        <header>
+            <h2><a href="@item.Url">@item.articleItemTitle</a></h2>
+        </header>
+        <div class="image">
+            <a href="@item.Url"><img src="@item.GetCropUrl("articleItemImage", "fit")" /></a>
+        </div>
+        <div class="post-content">
+            <p class="meta-info">Posted by @item.creatorName on @item.createDate.ToString("dd. MMMM yyyy")</p>
+            <div>@Umbraco.Truncate(@item.articleItemContent, 350)</div>
+            <a href="@item.Url" class="readmore">Read More</a>
+        </div>
+    </article>
+
+    if (!item.IsLast())
+    {
+        <hr />
+    }
+}

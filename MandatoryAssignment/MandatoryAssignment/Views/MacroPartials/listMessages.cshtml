@@ -1,0 +1,26 @@
+﻿@using Umbraco.Web
+@using Umbraco.Web.Security
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    var selection = CurrentPage.Site().FirstChild("messageBoard").Children.Where("Visible").OrderBy("CreateDate desc");
+}
+@foreach (var item in selection)
+{
+    var memberShipHelper = new MembershipHelper(UmbracoContext.Current);
+    var member = memberShipHelper.GetById(item.messageMemberID);
+
+    <div class="row message">
+        <div class="col-md-offset-2 col-md-8">
+            <span class="member-name">@member.Name</span>
+            <span class="meta-info">@item.createDate.ToString("dd. MMMM yyyy")</span>
+        </div>
+        <div class="col-md-offset-2 col-md-8">
+            <span class="message-text">@item.messageMessage</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <hr />
+        </div>
+    </div>
+}

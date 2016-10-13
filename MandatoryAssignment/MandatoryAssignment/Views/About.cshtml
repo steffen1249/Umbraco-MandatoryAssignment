@@ -1,0 +1,10 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+}
+<h1 class="pagetitle">@Umbraco.Field("pageName")</h1>
+<div class="post-content">
+	@Umbraco.Field("aboutContent")
+</div>
+<hr>
+@CurrentPage.GetGridHtml("gridAbout", "MyGrid")

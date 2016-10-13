@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Web.Models;
+@{
+    String numOfProjects = Model.MacroParameters["NumOfProjects"].ToString();
+    DynamicPublishedContentList selection = new DynamicPublishedContentList();
+
+    if (String.IsNullOrEmpty(numOfProjects))
+    {
+        selection = @Umbraco.Content(1085)
+                .Children()
+                .Where("Visible")
+                .OrderBy("CreateDate desc");
+    } else
+    {
+        selection = @Umbraco.Content(1085)
+                        .Children()
+                        .Where("Visible")
+                        .OrderBy("CreateDate desc")
+                        .Take(Convert.ToInt32(numOfProjects));
+    }
+}
+
+<div class="project-grid clearfix">
+    @foreach (var item in selection)
+    {
+        <a href="@item.Url">
+            <div class="project-item">
+                <img src="@item.GetCropUrl("projectItemImage", "thumbnail")" />
+                <div class="overlay">
+                    <div>
+                        <h2>@item.GetPropertyValue("projectItemTitle")</h2>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>
